@@ -8,32 +8,32 @@
 
 ###### Build and install cras (chromium audio server)
 
-#- name: clone cras source
-#  git:
-#    repo: 'https://chromium.googlesource.com/chromiumos/third_party/adhd'
-#    version: "{{ adhd_version }}"
-#    dest: "{{ adhd_workdir }}"
+- name: clone cras source
+  git:
+    repo: 'https://chromium.googlesource.com/chromiumos/third_party/adhd'
+    version: "{{ adhd_version }}"
+    dest: "{{ adhd_workdir }}"
 
-#- name: generate cras/config (failure expected)
-#  command: make
-#  args:
-#    creates: "{{ cras_workdir }}/configure"
-#    chdir: "{{ adhd_workdir }}"
-#  ignore_errors: true
+- name: generate cras/config (failure expected)
+  command: make
+  args:
+    creates: "{{ cras_workdir }}/configure"
+    chdir: "{{ adhd_workdir }}"
+  ignore_errors: true
 
-#- name: configure cras
-#  command: "env {{ cras_configure_env }} ./configure {{ cras_configure_opts }}"
-#  args:
-#    creates: "{{ cras_workdir }}/Makefile"
-#    chdir: "{{ cras_workdir }}"
+- name: configure cras
+  command: "env {{ cras_configure_env }} ./configure {{ cras_configure_opts }}"
+  args:
+    creates: "{{ cras_workdir }}/Makefile"
+    chdir: "{{ cras_workdir }}"
 
-#- name: build cras
-#  command: "make"
-#  args:
-#    creates: "{{ cras_workdir }}/src/cras"
-#    chdir: "{{ cras_workdir }}"
+- name: build cras
+  command: "make"
+  args:
+    creates: "{{ cras_workdir }}/src/cras"
+    chdir: "{{ cras_workdir }}"
 
-- name: install cras server binary
+- name: install cras server binary 
   become: true
   copy:
     remote_src: true
